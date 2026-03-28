@@ -64,6 +64,8 @@ resource aws_instance my_instance {
         EC2_SECOND="t2.medium"
     })#meta arguement,for suppose names of multiple instances should be different
 
+    depends_on=[aws_security_group.my_security_group,aws_key_pair.my_key]
+
     key_name = aws_key_pair.my_key.key_name
     security_groups = [aws_security_group.my_security_group.name]
     instance_type = each.value
