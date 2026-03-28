@@ -58,11 +58,18 @@ resource aws_security_group my_security_group {
 #ec2 Instance
 
 resource aws_instance my_instance {
+
+        for_each = tomap({
+        EC2_FIRST="t2.micro",
+        EC2_SECOND="t2.medium"
+    })#meta arguement,for suppose names of multiple instances should be different
+
     key_name = aws_key_pair.my_key.key_name
     security_groups = [aws_security_group.my_security_group.name]
-    instance_type = var.ec2_instance_type
+    instance_type = each.value
     ami= var.ec2_ami_id
-    user_data =file("install_nginx.sh")  
+    user_data =file("install_nginx.sh") 
+    # #meta arguement this creates multiple instances 
 
     root_block_device{
         volume_size = var.ec2_root_storage_size
@@ -70,6 +77,6 @@ resource aws_instance my_instance {
     }
 
     tags={
-        Name="TF EC2"
+        Name=each.key
     }
 }
