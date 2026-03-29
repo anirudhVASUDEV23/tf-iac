@@ -74,7 +74,7 @@ resource aws_instance my_instance {
     # #meta arguement this creates multiple instances 
 
     root_block_device{
-        volume_size = var.ec2_root_storage_size
+        volume_size = var.env == "prd" ? 20 : var.ec2_default_root_storage_size
         volume_type = "gp3"
     }
 
@@ -82,3 +82,9 @@ resource aws_instance my_instance {
         Name=each.key
     }
 }
+
+# resource aws_instance my_new_instance{
+#     ami = "unknown"
+#     instance_type = "unknown"
+# }## terraform import aws_instance.my_new_instance <id>
+# ## to remove from state management of terraform run terraform state rm aws_instance.my_new_instance 
