@@ -1,6 +1,6 @@
 #key-pair for login
 resource aws_key_pair my_key {
-    key_name="terra-key-ec2"
+    key_name="terra-key-ec2-${terraform.workspace}"
     public_key = file("terra-key-ec2.pub")
 }
 
@@ -13,7 +13,7 @@ resource aws_default_vpc default {
 }
 
 resource aws_security_group my_security_group {
-    name = "automate-sg"
+    name = "automate-sg-${terraform.workspace}"
     description = "This will add a TF generated Security group"
     vpc_id =aws_default_vpc.default.id #interpolation
 
