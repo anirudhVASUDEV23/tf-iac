@@ -8,6 +8,7 @@ resource aws_key_pair my_key {
 resource aws_default_vpc default {
     tags={
         Name="Default VPC"
+        Environment=var.env
     }
 }
 
@@ -52,6 +53,7 @@ resource aws_security_group my_security_group {
 
     tags = {
     Name = "automate-sg"
+    Environment = var.env
   }
 }
 
